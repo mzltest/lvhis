@@ -34,6 +34,7 @@ function showsess(roomid){
   })
 }
 captures={}
+sortedcapt=[]
 slidei=0
 function showreplay(sesskey){
   fetch('./api/liveinfo?key='+sesskey).then(res=>res.json()).then(data=>{
@@ -42,6 +43,7 @@ function showreplay(sesskey){
       return
     }
     captures=data.data.captures
+    sortedcapt=Object.keys(captures).sort(function(a, b){return a-b})
     document.getElementById('roomconf').hidden=true
     show(captures,slidei)
   })
@@ -50,7 +52,7 @@ function showreplay(sesskey){
 }
 function show(captures,slidei){
   document.getElementById('info').innerHTML='正在载入...'
-  captkey=captures[Object.keys(captures)[slidei]]
+  captkey=captures[sortedcapt[slidei]]
   fetch('./api/cacheable/captinfo?key='+captkey).then(res=>res.json()).then(data=>{
     if(data.code!=0){
       alert(data.err)
