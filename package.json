@@ -52,7 +52,7 @@
     "@architect/functions": "^4.0.0",
     "@architect/sandbox": "^4.1.1",
     "@begin/data": "^3.0.0",
-    "node-fetch": "^2.6.7",
+    "node-fetch": "^3.3.0",
     "tiny-json-http": "^7.3.0"
   }
 }
