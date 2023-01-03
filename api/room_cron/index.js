@@ -1,7 +1,6 @@
 let data = require('@begin/data')
 let fetch = require('node-fetch')
 const https = require("https");
-const { table } = require('console');
 const agent = new https.Agent({
   rejectUnauthorized: false
 })
