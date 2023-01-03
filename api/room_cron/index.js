@@ -8,11 +8,16 @@ const agent = new https.Agent({
 
 async function processroom(roomdata){
 //cover url is at roomdata.cover
-res=await fetch('https:'+roomdata.cover+'@854w.webp',{agent:agent});
+res=await fetch('https:'+roomdata.cover+'@1000w.webp',{agent:agent});
+instore=await data.get({'table':'keyframes','key':roomdata.cover.split('/').pop().split('.')[0]})
+if(!instore){
 resb=await res.buffer()
 resb64=resb.toString('base64')
-framekey=await data.set({'table':'keyframes','data':resb64})
-framekey=framekey.key
+framekey=await data.set({'table':'keyframes','data':resb64,'key':roomdata.cover.split('/').pop().split('.')[0]})
+framekey=framekey.key}
+else{
+framekey=roomdata.cover.split('/').pop().split('.')[0]
+}
 //set capt info
 //取弹幕相关数据
 res=await fetch('https://api.live.bilibili.com/xlive/web-room/v1/dM/gethistory?roomid='+roomdata.roomid,{agent:agent});
@@ -92,8 +97,8 @@ exports.handler = async function create(req) {
       }else{
           //有记录
           roomres=res//后面res就被占用了
-          if(roomres.lastts+200>Date.now()/1000){
-              return {'code':429,'err':'这个房间在200秒之前已经取过数据了。之所以设这种限制是因为b站那边keyframe貌似更新是5分钟多才更新一次，请求小于5分钟keyframe还是同一个.请注意这东西不是实时服务，只是留个简单的历史。'}
+          if(roomres.lastts+30>Date.now()/1000){
+              return {'code':429,'err':'这个房间在30秒之前已经取过数据了。之所以设这种限制是因为b站那边keyframe貌似更新是5分钟多才更新一次，请求小于5分钟keyframe还是同一个.请注意这东西不是实时服务，只是留个简单的历史。'}
           }
           res=await fetch('https://api.bilibili.com/x/web-interface/wbi/search/type?__refresh__=true&order=live_time&search_type=live&keyword='+key,{agent:agent});
       resjson=await res.json()
