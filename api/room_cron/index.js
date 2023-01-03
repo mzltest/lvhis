@@ -8,7 +8,7 @@ const agent = new https.Agent({
 
 async function processroom(roomdata){
 //cover url is at roomdata.cover
-res=await fetch('https:'+roomdata.cover+'@1000w.webp',{agent:agent});
+res=await fetch('https:'+roomdata.cover+'@.webp',{agent:agent});
 instore=await data.get({'table':'keyframes','key':roomdata.cover.split('/').pop().split('.')[0]})
 if(!instore){
 resb=await res.buffer()
