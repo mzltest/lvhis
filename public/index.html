@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Hello, world!</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="" />
+</head>
+<body>
+    <div id="roomconf">  <h1>重放工具</h1>
+      <label for="roomid">房间号（长）</label>
+      <input id="roomid" type="number"/>
+      <button onclick="showsess(document.getElementById('roomid').value)">继续</button></div>
+<div id="replay" >
+  <img id="frame"/>
+  <hr>
+  <textarea width="480px" height="500px" style="display:inline;" id="adminchat"></textarea>
+  <textarea width="480px" height="500px" style="display:inline;" id="roomchat"></textarea>
+  <div id="info"></div>
+</div>
+<script>
+function showsess(roomid){
+
+  fetch('./api/room_info?key='+roomid).then(res=>res.json()).then(data=>{
+    if(data.code!=0){
+      alert(data.err)
+      return
+    }
+    html='<ul>'
+    for(el in data.data.sessions){
+      html+=`<li onclick='showreplay("${data.data.sessions[el]}")'>${el}</li>`
+    }
+    document.getElementById('roomconf').innerHTML=html+'</ul>'
+  })
+}
+captures={}
+slidei=0
+function showreplay(sesskey){
+  fetch('./api/liveinfo?key='+sesskey).then(res=>res.json()).then(data=>{
+    if(data.code!=0){
+      alert(data.err)
+      return
+    }
+    captures=data.data.captures
+    document.getElementById('roomconf').hidden=true
+    show(captures,slidei)
+  })
+
+
+}
+function show(captures,slidei){
+  document.getElementById('info').innerHTML='正在载入...'
+  captkey=captures[Object.keys(captures)[slidei]]
+  fetch('./api/cacheable/captinfo?key='+captkey).then(res=>res.json()).then(data=>{
+    if(data.code!=0){
+      alert(data.err)
+      return
+    }
+   document.getElementById('frame').src='./api/cacheable/getimg?key='+data.data.keyframekey
+   chattxt=''
+   for (el of data.data.chatdata.admin){
+     chattxt+=`[${el.timeline}]${el.nickname}:${el.text}\n`
+   }
+   document.getElementById('adminchat').value=chattxt
+   chattxt=''
+   for (el of data.data.chatdata.room){
+     chattxt+=`[${el.timeline}]${el.nickname}:${el.text}\n`
+   }
+   document.getElementById('roomchat').value=chattxt
+   document.getElementById('info').innerHTML=`
+   <b>标题:</b>${data.data.livedata.title} <b>观看人数:</b>${data.data.livedata.watched_show.num} <b>旧版人气:</b>${data.data.livedata.online}<br>
+   这是第${slidei+1}次数据，取于${new Date(data.data.ts*1000).toLocaleDateString()+' '+new Date(data.data.ts*1000).toLocaleTimeString()}，共有${Object.keys(captures).length}条数据。
+   <details>${JSON.stringify(data.data)}</details>
+   <button onclick='javascript:slidei--;show(captures,slidei)'><-</button>   <button onclick='javascript:slidei++;show(captures,slidei)'>-></button>
+   `
+  })
+
+}
+function keyboard(eve) {
+	if(eve.keyCode==39)//右箭头
+  {
+    slidei++
+    show(captures,slidei)
+    return
+  }
+  if(eve.keyCode==37)//左箭头
+  {
+    slidei--
+    show(captures,slidei)
+    return
+  }
+}
+document.onkeyup = keyboard;  //不需要加参数和括号
+if (document.location.href.split("?").length > 1) {
+showsess(document.location.href.split("?")[1])
+}
+</script>
+</body>
+</html>

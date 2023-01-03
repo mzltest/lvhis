@@ -1,0 +1,58 @@
+{
+  "name": "begin-app",
+  "version": "0.0.0",
+  "description": "Begin basic CRUD app",
+  "arc": {
+    "app": "crud-app",
+    "http": [
+      {
+        "/api/room_info": {
+          "method": "get",
+          "src": "/api/room_info"
+        }
+      },
+      {
+        "/api/room_cron": {
+          "method": "any",
+          "src": "/api/room_cron"
+        }
+      },
+      {
+        "/api/liveinfo": {
+          "method": "get",
+          "src": "/api/liveinfo"
+        }
+      },
+      {
+        "/api/cacheable/captinfo": {
+          "method": "get",
+          "src": "/api/captinfo"
+        }
+      }, {
+        "/api/cacheable/getimg": {
+          "method": "get",
+          "src": "/api/keyframes"
+        }
+      }
+    ],
+    "tables": [
+      {
+        "data": {
+          "scopeID": "*String",
+          "dataID": "**String",
+          "ttl": "TTL"
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "start": "npx sandbox"
+  },
+  "dependencies": {
+    "@architect/functions": "^4.0.0",
+    "@architect/sandbox": "^4.1.1",
+    "@begin/data": "^3.0.0",
+    "node-fetch": "^2.6.7",
+    "tiny-json-http": "^7.3.0"
+  }
+}
