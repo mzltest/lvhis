@@ -70,7 +70,7 @@ function show(captures,slidei){
    }
    document.getElementById('roomchat').value=chattxt
    document.getElementById('info').innerHTML=`
-   <b>标题:</b>${data.data.livedata.title} <b>观看人数:</b>${data.data.livedata.watched_show.num} <b>旧版人气:</b>${data.data.livedata.online}<br>
+   <b>标题:</b>${data.data.livedata.title} <b>观看人次:</b>${data.data.livedata.watched_show.num} <b>旧版人气:</b>${data.data.livedata.online}<br>
    这是第${slidei+1}次数据，取于${new Date(data.data.ts*1000).toLocaleDateString()+' '+new Date(data.data.ts*1000).toLocaleTimeString()}，共有${Object.keys(captures).length}条数据。
    <details>${JSON.stringify(data.data)}</details>
    <button onclick='javascript:slidei--;show(captures,slidei)'><-</button>   <button onclick='javascript:slidei++;show(captures,slidei)'>-></button>
