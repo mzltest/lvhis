@@ -12,11 +12,13 @@
       <input id="roomid" type="number"/>
       <button onclick="showsess(document.getElementById('roomid').value)">继续</button></div>
 <div id="replay" >
-  <img id="frame"/>
-  <hr>
-  <textarea width="480px" height="500px" style="display:inline;" id="adminchat"></textarea>
-  <textarea width="480px" height="500px" style="display:inline;" id="roomchat"></textarea>
+  <img id="frame" height="640px"/>
+ 
+  
+  <textarea style="display:inline;vertical-align: top;" id="roomchat"></textarea><hr>
+  <textarea  style="display:inline;float: right;" id="adminchat"></textarea>
   <div id="info"></div>
+</div>
 </div>
 <script>
 function showsess(roomid){
