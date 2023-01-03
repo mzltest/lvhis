@@ -49,7 +49,7 @@
     "start": "npx sandbox"
   },
   "dependencies": {
-    "@architect/functions": "^4.0.0",
+    "@architect/functions": "^5.3.3",
     "@architect/sandbox": "^4.1.1",
     "@begin/data": "^3.0.0",
     "node-fetch": "^2.6.7",
