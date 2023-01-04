@@ -13,7 +13,7 @@ exports.handler = async function create(req) {
     res=await data.get({table:'roominfo',key:key})
       if (!res){
         return{
-          'code':404,'err':'无此room,请先执行room_cron来创建记录。'
+          'code':404,'err':'无此room,请先执行room_cron来创建记录。注意要自己跑定时任务，此服务不主动获取数据。间隔以5-10分钟为宜，太短关键帧不会更新。'
         }
       }
     
