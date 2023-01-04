@@ -23,6 +23,7 @@
 <script>
 groomid=0
 function showsess(roomid){
+	document.getElementById('roomconf').innerHTML='正在载入...'
     document.getElementById('roomconf').hidden=false
 	document.getElementById('replay').hidden=true
 groomid=roomid
@@ -83,25 +84,29 @@ function show(captures,slidei){
    document.getElementById('info').innerHTML=`
    <b>标题:</b>${data.data.livedata.title} <b>观看人次:</b>${data.data.livedata.watched_show.num} <b>旧版人气:</b>${data.data.livedata.online}<br>
    这是第${slidei+1}次数据，取于${new Date(data.data.ts*1000).toLocaleDateString()+' '+new Date(data.data.ts*1000).toLocaleTimeString()}（截图取于${keytime}），共有${Object.keys(captures).length}条数据。<br>
-   <button onclick='javascript:slidei--;show(captures,slidei)'><-</button>   <button onclick='javascript:slidei++;show(captures,slidei)'>-></button>  <details>${JSON.stringify(data.data)}</details>
+   <button onclick='javascript:slidei--;show(captures,slidei)'><-</button>    <button onclick='javascript:;showsess(groom)'>^</button> <button onclick='javascript:slidei++;show(captures,slidei)'>-></button> <details>${JSON.stringify(data.data)}</details>
  
    `
   })
 
 }
 function keyboard(eve) {
-	if(eve.keyCode==39)//右箭头
+	if(eve.key=='ArrowRight')//右箭头
   {
     slidei++
     show(captures,slidei)
     return
   }
-  if(eve.keyCode==37)//左箭头
+  if(eve.key=='ArrowLeft')//左箭头
   {
     slidei--
     show(captures,slidei)
     return
   }
+if(eve.key=='ArrowUp')
+{
+	showsess(groomid);return
+}
 }
 document.onkeyup = keyboard;  //不需要加参数和括号
 if (document.location.href.split("?").length > 1) {
