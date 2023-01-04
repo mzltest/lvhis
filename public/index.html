@@ -37,7 +37,9 @@ sortedsess=Object.keys(data.data.sessions).sort(function(a,b){return Date.parse(
     for(el of sortedsess){
       html+=`<li onclick='showreplay("${data.data.sessions[el]}")'>${el}</li>`
     }
-    document.getElementById('roomconf').innerHTML=html+'</ul>'
+    document.getElementById('roomconf').innerHTML=html+'</ul>'+`   <label for="roomid">房间号（长）</label>
+      <input id="roomid" type="number"/>
+      <button onclick="showsess(document.getElementById('roomid').value)">更换?</button></div>`
   })
 }
 captures={}
