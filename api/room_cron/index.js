@@ -25,11 +25,19 @@ if(resjson.code!=0){
     return {'code':400,'err':'取弹幕时发生问题。',data:resjson}
 }
 chatdata=resjson.data
+//取高能榜的那个在线人数
+res=await fetch('https://api.live.bilibili.com/xlive/general-interface/v1/rank/getOnlineGoldRank?page=1&pageSize=1&roomId='+roomdata.roomid+'&ruid='+roomdata.uid,{agent:agent});
+resjson=await res.json()
+if(resjson.code!=0){
+    return {'code':400,'err':'取高能用户相关时发生问题。',data:resjson}
+}
+online=resjson.data.onlineNum
 res=await data.set({
     'table':'captinfo',
     'ts':Date.now()/1000,
     'chatdata':chatdata,
     'livedata':roomdata,
+    'online': online,
     'keyframekey':framekey,
     'keyframeurl':roomdata.cover
   }
