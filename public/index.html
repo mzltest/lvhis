@@ -40,6 +40,9 @@ sortedsess=Object.keys(data.data.sessions).sort(function(a,b){return Date.parse(
     document.getElementById('roomconf').innerHTML=html+'</ul>'+`   <label for="roomid">房间号（长）</label>
       <input id="roomid" type="number"/>
       <button onclick="showsess(document.getElementById('roomid').value)">更换?</button></div>`
+    var currenturl = window.location.href;
+var newUrl = (currenturl.split("?"))[0];
+history.pushState('', '', newUrl + '?' + roomid); 
   })
 }
 captures={}
