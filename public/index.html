@@ -43,6 +43,7 @@ captures={}
 sortedcapt=[]
 slidei=0
 function showreplay(sesskey){
+	slidei=0
 	    document.getElementById('replay').hidden=false
   fetch('./api/liveinfo?key='+sesskey).then(res=>res.json()).then(data=>{
     if(data.code!=0){
@@ -58,7 +59,7 @@ function showreplay(sesskey){
 
 }
 function show(captures,slidei){
-	if(slidei<0 || slidei>sortedcapt.length-1){slidei=0;showsess(groomid);return}
+	if(slidei<0 || slidei>sortedcapt.length-1){showsess(groomid);return}
   document.getElementById('info').innerHTML='正在载入...'
   captkey=captures[sortedcapt[slidei]]
   fetch('./api/cacheable/captinfo?key='+captkey).then(res=>res.json()).then(data=>{
