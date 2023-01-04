@@ -58,7 +58,7 @@ function showreplay(sesskey){
 
 }
 function show(captures,slidei){
-	if(slidei<0 || slidei>captures.length-1){showsess(groomid);return}
+	if(slidei<0 || slidei>Object.keys(captures).length-1){showsess(groomid);return}
   document.getElementById('info').innerHTML='正在载入...'
   captkey=captures[sortedcapt[slidei]]
   fetch('./api/cacheable/captinfo?key='+captkey).then(res=>res.json()).then(data=>{
