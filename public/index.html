@@ -21,8 +21,9 @@
 </div>
 </div>
 <script>
+roomid=0
 function showsess(roomid){
-
+roomid=roomid
   fetch('./api/room_info?key='+roomid).then(res=>res.json()).then(data=>{
     if(data.code!=0){
       alert(data.err)
@@ -54,6 +55,7 @@ function showreplay(sesskey){
 
 }
 function show(captures,slidei){
+	if(slidei<0 || slidei>captures.length-1){showsess(roomid);return}
   document.getElementById('info').innerHTML='正在载入...'
   captkey=captures[sortedcapt[slidei]]
   fetch('./api/cacheable/captinfo?key='+captkey).then(res=>res.json()).then(data=>{
