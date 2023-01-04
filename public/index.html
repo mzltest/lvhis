@@ -11,7 +11,7 @@
       <label for="roomid">房间号（长）</label>
       <input id="roomid" type="number"/>
       <button onclick="showsess(document.getElementById('roomid').value)">继续</button></div>
-<div id="replay" >
+<div id="replay" hidden>
   <img id="frame" height="640px" onclick="javascript:slidei++;show(captures,slidei)"/>
  
   
@@ -23,6 +23,8 @@
 <script>
 groomid=0
 function showsess(roomid){
+    document.getElementById('roomconf').hidden=false
+	document.getElementById('replay').hidden=true
 groomid=roomid
   fetch('./api/room_info?key='+roomid).then(res=>res.json()).then(data=>{
     if(data.code!=0){
@@ -41,6 +43,7 @@ captures={}
 sortedcapt=[]
 slidei=0
 function showreplay(sesskey){
+	    document.getElementById('replay').hidden=false
   fetch('./api/liveinfo?key='+sesskey).then(res=>res.json()).then(data=>{
     if(data.code!=0){
       alert(data.err)
