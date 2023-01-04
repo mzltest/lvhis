@@ -76,7 +76,7 @@ function show(captures,slidei){
    keytime=keytime.slice(0,2)+'-'+keytime.slice(2,4)+' '+keytime.slice(4,6)+':'+keytime.slice(6,8)+':'+keytime.slice(8,10)
    document.getElementById('info').innerHTML=`
    <b>标题:</b>${data.data.livedata.title} <b>观看人次:</b>${data.data.livedata.watched_show.num} <b>旧版人气:</b>${data.data.livedata.online}<br>
-   这是第${slidei+1}次数据，取于${new Date(data.data.ts*1000).toLocaleDateString()+' '+new Date(data.data.ts*1000).toLocaleTimeString()}（截图取于${keytime}），共有${Object.keys(captures).length}条数据。
+   这是第${slidei+1}次数据，取于${new Date(data.data.ts*1000).toLocaleDateString()+' '+new Date(data.data.ts*1000).toLocaleTimeString()}（截图取于${keytime}），共有${Object.keys(captures).length}条数据。<br>
    <button onclick='javascript:slidei--;show(captures,slidei)'><-</button>   <button onclick='javascript:slidei++;show(captures,slidei)'>-></button>  <details>${JSON.stringify(data.data)}</details>
  
    `
