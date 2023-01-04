@@ -28,8 +28,9 @@ function showsess(roomid){
       alert(data.err)
       return
     }
+sortedsess=Object.keys(data.data.sessions).sort(function(a,b){return Date.parse(a) - Date.parse(b)})
     html='<ul>'
-    for(el in data.data.sessions){
+    for(el in sortedsess){
       html+=`<li onclick='showreplay("${data.data.sessions[el]}")'>${el}</li>`
     }
     document.getElementById('roomconf').innerHTML=html+'</ul>'
