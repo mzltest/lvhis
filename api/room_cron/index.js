@@ -4,7 +4,10 @@ const https = require("https");
 const agent = new https.Agent({
   rejectUnauthorized: false
 })
-const buvid3 = require('crypto').randomUUID().toUpperCase();
+const { v4: uuidv4 } = require('uuid');
+
+// 生成一个随机 UUID，并将其转换为大写
+const buvid3 = uuidv4().toUpperCase();
 
 async function processroom(roomdata){
 //cover url is at roomdata.cover
