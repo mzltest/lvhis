@@ -15,8 +15,7 @@
   <img id="frame" height="640px" onclick="javascript:slidei++;show(captures,slidei)"/>
  
   
-  <textarea style="display:inline;vertical-align: top;" id="roomchat"></textarea><hr>
-  <textarea  style="display:inline;float: right;" id="adminchat"></textarea>
+
   <div id="info"></div>
 </div>
 </div>
@@ -74,16 +73,7 @@ function show(captures,slidei){
       return
     }
    document.getElementById('frame').src='./api/cacheable/getimg?key='+data.data.keyframekey
-   chattxt=''
-   for (el of data.data.chatdata.admin){
-     chattxt+=`[${el.timeline}]${el.nickname}:${el.text}\n`
-   }
-   document.getElementById('adminchat').value=chattxt
-   chattxt=''
-   for (el of data.data.chatdata.room){
-     chattxt+=`[${el.timeline}]${el.nickname}:${el.text}\n`
-   }
-   document.getElementById('roomchat').value=chattxt
+ 
    keytime=data.data.keyframeurl.split('keyframe').pop().slice(0,10)
    keytime=keytime.slice(0,2)+'-'+keytime.slice(2,4)+' '+keytime.slice(4,6)+':'+keytime.slice(6,8)+':'+keytime.slice(8,10)
    document.getElementById('info').innerHTML=`
