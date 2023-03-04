@@ -23,12 +23,7 @@ framekey=roomdata.cover.split('/').pop().split('.')[0]
 }
 //set capt info
 //取弹幕相关数据
-res=await fetch('https://api.live.bilibili.com/xlive/web-room/v1/dM/gethistory?roomid='+roomdata.roomid,{agent:agent,headers: { 'Cookie': `buvid3=${buvid3}infoc; innersign=1;` }});
-resjson=await res.json()
-if(resjson.code!=0){
-    return {'code':400,'err':'取弹幕时发生问题。',data:resjson}
-}
-chatdata=resjson.data
+//现在已经不提供历史弹幕了
 //取高能榜的那个在线人数
 res=await fetch('https://api.live.bilibili.com/xlive/general-interface/v1/rank/getOnlineGoldRank?page=1&pageSize=1&roomId='+roomdata.roomid+'&ruid='+roomdata.uid,{agent:agent,headers: { 'Cookie': `buvid3=${buvid3}infoc; innersign=1;` }});
 resjson=await res.json()
@@ -39,7 +34,6 @@ online=resjson.data.onlineNum
 res=await data.set({
     'table':'captinfo',
     'ts':Date.now()/1000,
-    'chatdata':chatdata,
     'livedata':roomdata,
     'online': online,
     'keyframekey':framekey,
