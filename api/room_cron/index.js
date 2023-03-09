@@ -38,7 +38,7 @@ res=await data.set({
     'ts':Date.now()/1000,
     'livedata':roomdata,
     'online': online,
-    'onlineuser':onlineuser
+    'onlineuser':onlineuser,
     'keyframekey':framekey,
     'keyframeurl':roomdata.cover
   }
