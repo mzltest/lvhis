@@ -11,7 +11,7 @@ const buvid3 = uuidv4().toUpperCase();
 
 async function processroom(roomdata){
 //cover url is at roomdata.cover
-res=await fetch('https:'+roomdata.keyframe+'@854w.webp',{agent:agent,headers: { 'Cookie': `buvid3=${buvid3}infoc; innersign=1;` }});
+res=await fetch(''+roomdata.keyframe+'@854w.webp',{agent:agent,headers: { 'Cookie': `buvid3=${buvid3}infoc; innersign=1;` }});
 instore=await data.get({'table':'keyframes','key':roomdata.keyframe.split('/').pop().split('.')[0]})
 if(!instore){
 resb=await res.buffer()
