@@ -77,7 +77,7 @@ exports.handler = async function create(req) {
       if(resjson.data.result.live_room==null){
           return {code:404,err:'搜索无此结果，确认输入的是直播间id.此外短号需要改成对应的长号id,此外未在直播的用户也会是这个提示'}
       }
-      for (rooms of resjson.data){
+      rooms =resjson.data
           if (rooms.roomid==key || rooms.short_id==key){
             //found it!
             if(rooms.live_status==1){
@@ -105,7 +105,7 @@ exports.handler = async function create(req) {
                 }
             }
           }
-      }
+      
       return{
           'code':404,'err':'在搜索结果中没有找到匹配roomid或短id的直播间。'
       }
@@ -125,7 +125,7 @@ exports.handler = async function create(req) {
           return {code:404,err:'搜索无此结果，确认输入的是直播间id'}
       }
       //依然要去搜索:)
-      for (rooms of resjson.data){
+      rooms =resjson.data
         if (rooms.roomid==key || rooms.short_id==key){
           //found it!
           if(rooms.live_status==1){
@@ -180,7 +180,7 @@ exports.handler = async function create(req) {
                   'code':419,'err':'这个房间存在，但是目前并未直播。为了降低复杂度暂时先不写入数据。此行为可能会在之后的更新中改变',data:rooms
               }
           }
-        }
+        
     }
       }
     
