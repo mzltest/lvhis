@@ -11,15 +11,15 @@ const buvid3 = uuidv4().toUpperCase();
 
 async function processroom(roomdata){
 //cover url is at roomdata.cover
-res=await fetch('https:'+roomdata.cover+'@854w.webp',{agent:agent,headers: { 'Cookie': `buvid3=${buvid3}infoc; innersign=1;` }});
-instore=await data.get({'table':'keyframes','key':roomdata.cover.split('/').pop().split('.')[0]})
+res=await fetch('https:'+roomdata.keyframe+'@854w.webp',{agent:agent,headers: { 'Cookie': `buvid3=${buvid3}infoc; innersign=1;` }});
+instore=await data.get({'table':'keyframes','key':roomdata.keyframe.split('/').pop().split('.')[0]})
 if(!instore){
 resb=await res.buffer()
 resb64=resb.toString('base64')
-framekey=await data.set({'table':'keyframes','data':resb64,'key':roomdata.cover.split('/').pop().split('.')[0]})
+framekey=await data.set({'table':'keyframes','data':resb64,'key':roomdata.keyframe.split('/').pop().split('.')[0]})
 framekey=framekey.key}
 else{
-framekey=roomdata.cover.split('/').pop().split('.')[0]
+framekey=roomdata.keyframe.split('/').pop().split('.')[0]
 }
 //set capt info
 //取弹幕相关数据
@@ -68,7 +68,7 @@ exports.handler = async function create(req) {
       if (!res){
       //新建记录
       //1.先去搜索直播间
-      res=await fetch('https://api.bilibili.com/x/web-interface/wbi/search/type?__refresh__=true&order=live_time&search_type=live&keyword='+key,{agent:agent,headers: { 'Cookie': `buvid3=${buvid3}infoc; innersign=1;` }});
+      res=await fetch('https://api.live.bilibili.com/room/v1/Room/get_info?room_id='+key,{agent:agent,headers: { 'Cookie': `buvid3=${buvid3}infoc; innersign=1;` }});
       resjson=await res.json()
       if(resjson.code!=0){
           return {code:502,'err':'搜索过程中出错','data':resjson}
@@ -77,7 +77,7 @@ exports.handler = async function create(req) {
       if(resjson.data.result.live_room==null){
           return {code:404,err:'搜索无此结果，确认输入的是直播间id.此外短号需要改成对应的长号id,此外未在直播的用户也会是这个提示'}
       }
-      for (rooms of resjson.data.result.live_room){
+      for (rooms of resjson.data){
           if (rooms.roomid==key || rooms.short_id==key){
             //found it!
             if(rooms.live_status==1){
@@ -115,7 +115,7 @@ exports.handler = async function create(req) {
           if(roomres.lastts+30>Date.now()/1000){
               return {'code':429,'err':'这个房间在30秒之前已经取过数据了。之所以设这种限制是因为b站那边keyframe貌似更新是5分钟多才更新一次，请求小于5分钟keyframe还是同一个.请注意这东西不是实时服务，只是留个简单的历史。'}
           }
-          res=await fetch('https://api.bilibili.com/x/web-interface/wbi/search/type?__refresh__=true&order=live_time&search_type=live&keyword='+key,{agent:agent,headers: { 'Cookie': `buvid3=${buvid3}infoc; innersign=1;` }});
+          res=await fetch('https://api.live.bilibili.com/room/v1/Room/get_info?room_id='+key,{agent:agent,headers: { 'Cookie': `buvid3=${buvid3}infoc; innersign=1;` }});
       resjson=await res.json()
       console.log('1.搜索直播间=>',resjson)
       if(resjson.code!=0){
@@ -125,7 +125,7 @@ exports.handler = async function create(req) {
           return {code:404,err:'搜索无此结果，确认输入的是直播间id'}
       }
       //依然要去搜索:)
-      for (rooms of resjson.data.result.live_room){
+      for (rooms of resjson.data){
         if (rooms.roomid==key || rooms.short_id==key){
           //found it!
           if(rooms.live_status==1){
