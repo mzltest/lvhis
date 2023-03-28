@@ -47,7 +47,7 @@ res=await data.set({
     'danmus':danmus,
     'onlineuser':onlineuser,
     'keyframekey':framekey,
-    'keyframeurl':roomdata.cover
+    'keyframeurl':roomdata.keyframe
   }
   )
   console.log('processroom=>',res)
