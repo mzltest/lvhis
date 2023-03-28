@@ -78,7 +78,7 @@ exports.handler = async function create(req) {
           return {code:404,err:'搜索无此结果，确认输入的是直播间id.此外短号需要改成对应的长号id,此外未在直播的用户也会是这个提示'}
       }
       rooms =resjson.data
-          if (rooms.roomid==key || rooms.short_id==key){
+          if (rooms.room_id==key || rooms.short_id==key){
             //found it!
             if(rooms.live_status==1){
             captkey=await processroom(rooms)
@@ -94,7 +94,7 @@ exports.handler = async function create(req) {
             sessions={}
             sessions[rooms.live_time]=res.key
             res2 = await data.set({table:'roominfo',
-            key:rooms.roomid,
+            key:rooms.room_id,
             sessions:sessions,
             lastts:Date.now()/1000
             })
@@ -107,7 +107,7 @@ exports.handler = async function create(req) {
           }
       
       return{
-          'code':404,'err':'在搜索结果中没有找到匹配roomid或短id的直播间。'
+          'code':404,'err':'在搜索结果中没有找到匹配room_id或短id的直播间。'
       }
       }else{
           //有记录
@@ -126,7 +126,7 @@ exports.handler = async function create(req) {
       }
       //依然要去搜索:)
       rooms =resjson.data
-        if (rooms.roomid==key || rooms.short_id==key){
+        if (rooms.room_id==key || rooms.short_id==key){
           //found it!
           if(rooms.live_status==1){
             captkey=await processroom(rooms)
@@ -149,7 +149,7 @@ exports.handler = async function create(req) {
               })
               //更新roominfo的lastts
             res2 = await data.set({table:'roominfo',
-            key:rooms.roomid,
+            key:rooms.room_id,
             sessions:roomres.sessions,
             lastts:Date.now()/1000
             })
@@ -168,7 +168,7 @@ exports.handler = async function create(req) {
             //此处res是那个liveinfokey
             roomres.sessions[rooms.live_time]=res.key
             res2 = await data.set({table:'roominfo',
-            key:rooms.roomid,
+            key:rooms.room_id,
             sessions:roomres.sessions,
             lastts:Date.now()/1000
             })
