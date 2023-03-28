@@ -74,8 +74,7 @@ exports.handler = async function create(req) {
           return {code:502,'err':'搜索过程中出错','data':resjson}
       }
       console.log(resjson.data.result)
-      if(resjson.data.result.live_room==null){
-          return {code:404,err:'搜索无此结果，确认输入的是直播间id.此外短号需要改成对应的长号id,此外未在直播的用户也会是这个提示'}
+      
       }
       rooms =resjson.data
           if (rooms.roomid==key || rooms.short_id==key){
@@ -121,9 +120,7 @@ exports.handler = async function create(req) {
       if(resjson.code!=0){
           return {code:502,'err':'搜索过程中出错','data':resjson}
       }
-      if(resjson.data.result.live_room==null){
-          return {code:404,err:'搜索无此结果，确认输入的是直播间id'}
-      }
+
       //依然要去搜索:)
       rooms =resjson.data
         if (rooms.roomid==key || rooms.short_id==key){
