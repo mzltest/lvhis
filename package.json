@@ -54,7 +54,7 @@
     "@architect/sandbox": "^4.1.1",
     "@begin/data": "^3.0.0",
     "node-fetch": "^2.6.7",
-    "tiny-json-http": "^7.3.0",
+    "tiny-json-http": "^7.5.1",
     "uuid": "^9.0.0"
   }
 }
